@@ -41,7 +41,7 @@ fun Canvas.drawCTLNode(i : Int, scale : Float, paint : Paint) {
     paint.strokeCap = Paint.Cap.ROUND
     paint.strokeWidth = Math.min(w, h) / strokeFactor
     paint.color = foreColor
-    val yGap : Float = rSize / (lines + 2)
+    val yGap : Float = (2 * rSize) / (lines)
     save()
     translate(w/2, gap * (i + 1))
     rotate(90f * sc2)
@@ -217,7 +217,7 @@ class CircleTornByLinesView(ctx : Context) : View(ctx) {
         fun create(activity : Activity) : CircleTornByLinesView {
             val view : CircleTornByLinesView = CircleTornByLinesView(activity)
             activity.setContentView(view)
-            return view 
+            return view
         }
     }
 }
