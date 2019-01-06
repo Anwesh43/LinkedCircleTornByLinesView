@@ -212,4 +212,12 @@ class CircleTornByLinesView(ctx : Context) : View(ctx) {
             }
         }
     }
+
+    companion object {
+        fun create(activity : Activity) : CircleTornByLinesView {
+            val view : CircleTornByLinesView = CircleTornByLinesView(activity)
+            activity.setContentView(view)
+            return view 
+        }
+    }
 }
