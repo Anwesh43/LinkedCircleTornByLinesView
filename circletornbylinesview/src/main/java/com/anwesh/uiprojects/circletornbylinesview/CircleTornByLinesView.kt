@@ -30,6 +30,21 @@ fun Float.scaleFactor() : Float = Math.floor(this / scDiv).toFloat()
 fun Float.mirrorValue(a : Int, b : Int) : Float = (1 - scaleFactor()) * a.inverse() + scaleFactor() * b.inverse()
 fun Float.updateScale(dir : Float, a : Int, b : Int) : Float = mirrorValue(a, b) * dir * scGap
 
+fun Canvas.drawLineIndicator(x : Float, size : Float, sc1 : Float, sc2 : Float, paint : Paint) {
+    save()
+    translate(x, 0f)
+    rotate(90f * sc2)
+    drawLine(-size/2, 0f, -size/2 + 2 * size * sc1, 0f, paint)
+    restore()
+}
+
+fun Canvas.drawLineIndicatorOnEitherSide(x : Float, size : Float, sc1 : Float, sc2 : Float, paint: Paint) {
+    for (j in 0..1) {
+        val k : Float = 1f - 2 * j
+        drawLineIndicator(x * k, size, sc1, sc2, paint)
+    }
+}
+
 fun Canvas.drawCTLNode(i : Int, scale : Float, paint : Paint) {
     val w : Float = width.toFloat()
     val h : Float = height.toFloat()
@@ -45,6 +60,7 @@ fun Canvas.drawCTLNode(i : Int, scale : Float, paint : Paint) {
     val yGap : Float = (2 * rSize) / (lines)
     save()
     translate(w/2, gap * (i + 1))
+    drawLineIndicatorOnEitherSide(w/2 - size * 1.3f, size, sc1, sc2, paint)
     rotate(90f * sc2)
     drawCircle(0f, 0f, rSize, paint)
     translate(-size, -size)
