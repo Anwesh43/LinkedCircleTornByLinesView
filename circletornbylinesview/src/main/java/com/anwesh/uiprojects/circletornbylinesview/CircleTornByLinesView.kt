@@ -189,4 +189,26 @@ class CircleTornByLinesView(ctx : Context) : View(ctx) {
             curr.startUpdating(cb)
         }
     }
+
+    data class Renderer(var view : CircleTornByLinesView) {
+
+        private val animator : Animator = Animator(view)
+        private val ctl : CircleTornByLines = CircleTornByLines(0)
+
+        fun render(canvas : Canvas, paint : Paint) {
+            canvas.drawColor(backColor)
+            ctl.draw(canvas, paint)
+            animator.animate {
+                ctl.update {i, scl ->
+                    animator.stop()
+                }
+            }
+        }
+
+        fun handleTap() {
+            ctl.startUpdating {
+                animator.start()
+            }
+        }
+    }
 }
